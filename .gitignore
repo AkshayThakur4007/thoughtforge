@@ -1,0 +1,17 @@
+# Backend
+backend/node_modules
+backend/dist
+
+# Frontend
+frontend/node_modules
+frontend/dist
+frontend/.next
+
+# Environment Variables
+.env
+.env.local
+backend/.env
+frontend/.env
+
+# OS Files
+.DS_Store
