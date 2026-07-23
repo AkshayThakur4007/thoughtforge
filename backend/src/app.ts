@@ -2,8 +2,12 @@ import express from "express";
 import healthRouter from "./routes/health.routes";
 import authRouter from "./routes/auth.routes";
 import { errorMiddleware } from "./middleware/error.middleware";
+import cors from "cors";
+import { corsOptions } from "./config/cors";
 
 const app = express();
+
+app.use(cors(corsOptions));
 
 app.use(express.json());
 
