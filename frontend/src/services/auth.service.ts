@@ -9,3 +9,11 @@ export async function register(
 
   return response.data;
 }
+
+export async function login(
+  data: Omit<RegisterRequest, "name">,
+): Promise<RegisterResponse> {
+  const response = await axios.post<RegisterResponse>(API.AUTH.LOGIN, data);
+
+  return response.data;
+}

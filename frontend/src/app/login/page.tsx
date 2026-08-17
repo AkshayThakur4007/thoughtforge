@@ -4,57 +4,52 @@ import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { Eye, EyeOff } from "lucide-react";
 import { zodResolver } from "@hookform/resolvers/zod";
+import { z } from "zod";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { toast } from "sonner";
-import { register as registerUser } from "@/services/auth.service";
-import {
-  registerSchema,
-  RegisterFormData,
-} from "@/validations/auth.validation";
+import { login as loginUser } from "@/services/auth.service";
 import AuthLayout from "@/components/layout/AuthLayout";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 
-export default function RegisterPage() {
+const loginSchema = z.object({
+  email: z.string().email("Please enter a valid email address."),
+  password: z.string().min(1, "Password is required."),
+});
+
+type LoginFormData = z.infer<typeof loginSchema>;
+
+export default function LoginPage() {
   const router = useRouter();
   const [showPassword, setShowPassword] = useState(false);
-  
+
   const {
     register,
     handleSubmit,
     formState: { errors, isSubmitting },
-  } = useForm<RegisterFormData>({
-    resolver: zodResolver(registerSchema),
+  } = useForm<LoginFormData>({
+    resolver: zodResolver(loginSchema),
   });
 
-  const onSubmit = async (data: RegisterFormData) => {
+  const onSubmit = async (data: LoginFormData) => {
     try {
-      await registerUser(data);
-      toast.success("Account created successfully!");
-      router.push("/dashboard"); // Redirect to dashboard
-    } catch (error: any) {
-      toast.error(error?.response?.data?.message || "Failed to create account. Please try again.");
+      await loginUser(data);
+      toast.success("Welcome back!");
+      router.push("/dashboard");
+    } catch (error) {
+      const err = error as { response?: { data?: { message?: string } } };
+      toast.error(err?.response?.data?.message || "Invalid email or password.");
       console.error(error);
     }
   };
 
   return (
     <AuthLayout
-      title="Create your account"
-      subtitle="Start turning scattered thoughts into finished work."
+      title="Welcome back"
+      subtitle="Log in to continue to your workspace."
     >
       <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
-        <div className="space-y-2">
-          <label className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70">
-            Name
-          </label>
-          <Input className="bg-muted/50 h-10" type="text" {...register("name")} placeholder="Your name" />
-          {errors.name && (
-            <p className="text-sm text-destructive">{errors.name.message}</p>
-          )}
-        </div>
-
         <div className="space-y-2">
           <label className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70">
             Email
@@ -71,9 +66,17 @@ export default function RegisterPage() {
         </div>
 
         <div className="space-y-2">
-          <label className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70">
-            Password
-          </label>
+          <div className="flex items-center justify-between">
+            <label className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70">
+              Password
+            </label>
+            <Link
+              href="#"
+              className="text-sm font-medium text-primary hover:text-primary/80"
+            >
+              Forgot password?
+            </Link>
+          </div>
           <div className="relative">
             <Input
               className="bg-muted/50 h-10 pr-10"
@@ -101,16 +104,16 @@ export default function RegisterPage() {
         </div>
 
         <Button type="submit" className="w-full h-11 text-base font-medium shadow-md shadow-primary/10 transition-all hover:-translate-y-0.5" disabled={isSubmitting}>
-          {isSubmitting ? "Creating account..." : "Create account"}
+          {isSubmitting ? "Logging in..." : "Log in"}
         </Button>
 
         <p className="text-center text-sm text-muted-foreground mt-6">
-          Already have an account?{" "}
+          Don't have an account?{" "}
           <Link
-            href="/login"
+            href="/register"
             className="font-semibold text-primary hover:text-primary/80"
           >
-            Log in
+            Sign up
           </Link>
         </p>
       </form>

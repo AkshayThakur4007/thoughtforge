@@ -1,24 +1,19 @@
-"use client";
-
-import axios from "@/lib/axios";
-import { API } from "@/constants/api";
-import { register } from "@/services/auth.service";
+import Closing from "@/components/landing/Closing";
+import Footer from "@/components/landing/Footer";
+import Introduction from "@/components/landing/Introduction";
+import Navigation from "@/components/landing/Navigation";
+import Principles from "@/components/landing/Principles";
+import Workflow from "@/components/landing/Workflow";
 
 export default function Home() {
-  const testConnection = async () => {
-    await register({
-      name: "Akshay",
-      email: "akshay@test.com",
-      password: "password123",
-    });
-    try {
-      const response = await axios.get(API.HEALTH);
-
-      console.log(response.data);
-    } catch (error) {
-      console.error(error);
-    }
-  };
-
-  return <button onClick={testConnection}>Test Axios</button>;
+  return (
+    <>
+      <Navigation />
+      <Introduction />
+      <Workflow />
+      <Principles />
+      <Closing />
+      <Footer />
+    </>
+  );
 }

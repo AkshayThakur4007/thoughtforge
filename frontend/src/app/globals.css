@@ -1,18 +1,201 @@
 @import "tailwindcss";
+@import "tw-animate-css";
+@import "shadcn/tailwind.css";
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
+@custom-variant dark (&:is(.dark *));
+
+@theme inline {
+  /* Fonts */
+  --font-heading: var(--font-sans);
+  --font-sans: var(--font-sans);
+
+  /* Colors */
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+
+  --color-popover: var(--popover);
+  --color-popover-foreground: var(--popover-foreground);
+
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+
+  --color-secondary: var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
+
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+
+  --color-destructive: var(--destructive);
+
+  --color-border: var(--border);
+  --color-input: var(--input);
+  --color-ring: var(--ring);
+
+  /* Radius */
+  --radius-sm: calc(var(--radius) * 0.6);
+  --radius-md: calc(var(--radius) * 0.8);
+  --radius-lg: var(--radius);
+  --radius-xl: calc(var(--radius) * 1.4);
+  --radius-2xl: calc(var(--radius) * 1.8);
+  --radius-3xl: calc(var(--radius) * 2.2);
+  --radius-4xl: calc(var(--radius) * 2.6);
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+/* -------------------------------------------------------------------------- */
+/*                                  Light                                     */
+/* -------------------------------------------------------------------------- */
+
+:root {
+  /* Base */
+  --background: #f8f7f4;
+  --foreground: #1f1f1d;
+
+  /* Surfaces */
+  --card: #ffffff;
+  --card-foreground: #1f1f1d;
+
+  --popover: #ffffff;
+  --popover-foreground: #1f1f1d;
+
+  /* Brand */
+  --primary: #9a6b3f;
+  --primary-foreground: #ffffff;
+
+  /* Secondary */
+  --secondary: #f1efea;
+  --secondary-foreground: #1f1f1d;
+
+  /* Muted */
+  --muted: #f3f2ee;
+  --muted-foreground: #6b6b67;
+
+  /* Accent */
+  --accent: #efe8df;
+  --accent-foreground: #1f1f1d;
+
+  /* Feedback */
+  --destructive: #c94f4f;
+
+  /* UI */
+  --border: #e7e4de;
+  --input: #e7e4de;
+  --ring: #b07b4a;
+
+  /* Radius */
+  --radius: 0.625rem;
+
+  /* Brand Tokens */
+  --brand-copper: #9a6b3f;
+  --brand-copper-hover: #875c35;
+
+  --surface-elevated: #ffffff;
+
+  --success: #4f7d5c;
+  --warning: #c89a2b;
+}
+
+/* -------------------------------------------------------------------------- */
+/*                                   Dark                                     */
+/* -------------------------------------------------------------------------- */
+
+.dark {
+  /* Base */
+  --background: #161513;
+  --foreground: #f4f2ed;
+
+  /* Surfaces */
+  --card: #1e1d1a;
+  --card-foreground: #f4f2ed;
+
+  --popover: #1e1d1a;
+  --popover-foreground: #f4f2ed;
+
+  /* Brand */
+  --primary: #b9844e;
+  --primary-foreground: #161513;
+
+  /* Secondary */
+  --secondary: #26241f;
+  --secondary-foreground: #f4f2ed;
+
+  /* Muted */
+  --muted: #26241f;
+  --muted-foreground: #a39d93;
+
+  /* Accent */
+  --accent: #2a2723;
+  --accent-foreground: #f4f2ed;
+
+  /* Feedback */
+  --destructive: #d96a6a;
+
+  /* UI */
+  --border: #34312c;
+  --input: #34312c;
+  --ring: #c7925a;
+
+  /* Brand Tokens */
+  --brand-copper: #b9844e;
+  --brand-copper-hover: #c7925a;
+
+  --surface-elevated: #23211e;
+
+  --success: #5f9a6c;
+  --warning: #d5aa39;
+}
+
+/* -------------------------------------------------------------------------- */
+/*                                   Base                                     */
+/* -------------------------------------------------------------------------- */
+
+@layer base {
+  * {
+    @apply border-border outline-ring/50;
+  }
+
+  html {
+    @apply font-sans antialiased;
+    scroll-behavior: smooth;
+  }
+
+  body {
+    @apply bg-background text-foreground;
+    text-rendering: optimizeLegibility;
+  }
+
+  ::selection {
+    background: color-mix(in srgb, var(--primary) 25%, transparent);
   }
 }
 
-body {
-  background: var(--background);
-  color: var(--foreground);
+/* -------------------------------------------------------------------------- */
+/*                                Utilities                                   */
+/* -------------------------------------------------------------------------- */
+
+@layer utilities {
+  .surface-glass {
+    @apply bg-background/60 backdrop-blur-md border-border/40;
+    @supports (backdrop-filter: blur(16px)) {
+      @apply bg-background/40;
+    }
+  }
+
+  .text-gradient-copper {
+    @apply bg-gradient-to-br from-primary to-ring bg-clip-text text-transparent;
+  }
+
+  .hover-lift {
+    @apply transition-all duration-300 hover:-translate-y-1 hover:shadow-xl hover:shadow-primary/5;
+  }
+
+  .bg-cross-pattern {
+    background-image: url("data:image/svg+xml,%3Csvg width='24' height='24' viewBox='0 0 24 24' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M12 4V20M4 12H20' stroke='%23808080' stroke-opacity='0.5' stroke-width='1'/%3E%3C/svg%3E");
+    background-size: 32px 32px;
+  }
 }
