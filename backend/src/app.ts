@@ -1,6 +1,8 @@
 import express from "express";
 import healthRouter from "./routes/health.routes";
 import authRouter from "./routes/auth.routes";
+import projectRouter from "./routes/project.routes";
+import ideaRouter from "./routes/idea.routes";
 import { errorMiddleware } from "./middleware/error.middleware";
 import cors from "cors";
 import { corsOptions } from "./config/cors";
@@ -15,6 +17,8 @@ app.use(cookieParser());
 
 app.use("/api/v1", healthRouter);
 app.use("/api/v1/auth", authRouter);
+app.use("/api/v1/projects", projectRouter);
+app.use("/api/v1/ideas", ideaRouter);
 
 app.use(errorMiddleware);
 
