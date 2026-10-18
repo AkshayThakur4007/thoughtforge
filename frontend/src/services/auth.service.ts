@@ -17,3 +17,7 @@ export async function login(
 
   return response.data;
 }
+
+export async function logout(): Promise<void> {
+  await axios.post(API.AUTH.LOGOUT);
+}

@@ -135,11 +135,11 @@ export default function ProductPreview() {
 
                   <li>✓ Let AI improve your thinking.</li>
 
-                  <li>✓ Publish when you're ready.</li>
+                  <li>✓ Publish when you&apos;re ready.</li>
                 </ul>
 
                 <blockquote className="border-l-2 border-primary pl-5 italic text-foreground">
-                  Great work isn't created in one sitting. It's refined through
+                  Great work isn&apos;t created in one sitting. It&apos;s refined through
                   countless iterations.
                 </blockquote>
 
@@ -177,7 +177,7 @@ export default function ProductPreview() {
                 </p>
 
                 <p className="mt-3 text-sm leading-6">
-                  You're currently editing the introduction. Consider adding a
+                  You&apos;re currently editing the introduction. Consider adding a
                   practical example before explaining how ThoughtForge connects
                   knowledge.
                 </p>
