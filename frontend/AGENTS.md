@@ -28,3 +28,6 @@ The user has good experience with the frontend stack (Next.js, React). When work
 - **Separation of Concerns**: Controllers handle HTTP only (read input, map response). Services handle ALL business logic, authorization, and DB operations.
 - **Database Naming**: Use `snake_case` for the database and `camelCase` for TypeScript. Explicitly map Prisma models using `@map` and `@@map`.
 - **Implementation**: Build CRUD manually to deeply understand the lifecycle. Use database transactions in the service layer for multiple related operations.
+
+## Quality Assurance
+- **Linting & Type Checking**: Always run `npm run lint` and `npx tsc --noEmit` after implementing a new feature or making significant code changes. Fix any resulting errors before concluding the task.

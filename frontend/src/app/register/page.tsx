@@ -33,8 +33,9 @@ export default function RegisterPage() {
       await registerUser(data);
       toast.success("Account created successfully!");
       router.push("/dashboard"); // Redirect to dashboard
-    } catch (error: any) {
-      toast.error(error?.response?.data?.message || "Failed to create account. Please try again.");
+    } catch (error) {
+      const err = error as { response?: { data?: { message?: string } } };
+      toast.error(err?.response?.data?.message || "Failed to create account. Please try again.");
       console.error(error);
     }
   };
